@@ -9,21 +9,29 @@ const SystemButton = () => {
 
     return (
 
+        <div
+            style={{
+                textAlign: "center",
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+            }}
+        >
 
 
 
-
-        <Grid container justifycontent="center">
+        <Grid container>
             <Grid item>
                
 
                     
-                        <h1>Siemens System Control</h1>
+                        <h1 >Siemens System Control</h1>
                         
                             <h3 >Entire Network</h3>
                             <ButtonGroup variant="contained"
                                 aria-label="outlined primary button group"
-                                justifycontent="center">
+                                >
                                 
 
                                 <Button onClick={onsystem}>TURN ON SYSTEM</Button>
@@ -100,7 +108,7 @@ const SystemButton = () => {
                 
             </Grid>
         </Grid>
-
+        </div>
     );
 
 }
