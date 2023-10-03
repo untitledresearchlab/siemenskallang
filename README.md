@@ -4,7 +4,7 @@ Example of Web App Interface
 ![alt text](https://github.com/untitledresearchlab/siemenskallang/blob/main/interface_2.png?raw=true)
 
 Example of entire network setup
-![alt text](https://github.com/untitledresearchlab/siemenskallang/blob/main/Siemens_map.png?raw=true)
+![alt text](https://github.com/untitledresearchlab/siemenskallang/blob/main/Siemens_map_2.png?raw=true)
 
 
 #Wifi Details :
