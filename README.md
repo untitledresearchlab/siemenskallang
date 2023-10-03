@@ -1,7 +1,7 @@
 ﻿# Siemens Kallang Web Controller
 
 Example of Web App Interface
-![alt text](https://github.com/untitledresearchlab/siemenskallang/blob/main/interface_2.png?raw=true)
+![alt text](https://github.com/untitledresearchlab/siemenskallang/blob/main/siemens_controller_2.png?raw=true)
 
 Example of entire network setup
 ![alt text](https://github.com/untitledresearchlab/siemenskallang/blob/main/Siemens_map_2.png?raw=true)
