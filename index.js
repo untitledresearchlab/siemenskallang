@@ -1,4 +1,4 @@
-﻿/*
+/*
 
 ⠀⠀⠀⠀⠀⠀⠀⠀⣀⡤⠤⢤⣄⠀⢀⣤⠤⠤⠤⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⣠⠞⠉⠀⠀⠀⠈⣻⠋⠀⠀⠀⠀⠀⠉⠻⢷⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -41,7 +41,9 @@ CAPTURE CARD 2 : 192.168.0.6 / D0-C8-57-81-01-A0
 */
 
 
+
 var udp = require('dgram');
+
 const express = require('express')
 const app = express()
 const port = process.env.PORT || 9000;
@@ -52,6 +54,8 @@ const axios = require('axios');
 const osc = require('osc');
 var client = udp.createSocket('udp4');
 
+//const fs = request("fs");
+
 //WO port and IP
 var PORT = 3039;
 var HOST = '192.168.0.3';
@@ -60,13 +64,16 @@ var HOST = '192.168.0.3';
 const oscPort = new osc.UDPPort({ localAddress: '0.0.0.0' });
 oscPort.open({ port: 8000 });
 
+app.use(express.static('public'));
+
 app.listen(port, () => {
     console.log(`Node  app listening on port ${port}`)
     console.log('OSC sending on port 8000')
 })
 
 
-var whitelist = ['http://localhost']
+
+var whitelist = ['https://localhost']
 var corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
@@ -76,7 +83,10 @@ var corsOptions = {
         }
     }
 }
-app.use(cors())
+app.use(cors({
+    origin: 'https://192.168.0.2:3000',
+})
+);
 app.options(corsOptions, cors());
 
 //--------------------- System Control -------------------------------------------//
@@ -126,7 +136,7 @@ function shutsys() {
     client.send(shutdownwo, 0, shutdownwo.length, PORT, HOST, function (err, bytes) {
         if (err) throw err;
         console.log('UDP message sent to ' + HOST + ':' + PORT);
-        console.log(bytes);
+        console.log("Turning off system");
         //  client.close();
         //res.send('Playing presentation video');
     });
@@ -254,37 +264,297 @@ function presentation() {
     client.send(presentation, 0, presentation.length, PORT, HOST, function (err, bytes) {
         if (err) throw err;
         console.log('UDP message sent to ' + HOST + ':' + PORT);
-        console.log(bytes);
+        console.log("presentation");
         //  client.close();
         //res.send('Playing presentation video');
     });
 }
 
-app.get('/capture1', capture1);
+app.get('/ambient', ambient);
 
-var capture1 = Buffer.from("authenticate 1  \nreset \ndelay \"10\" \nrun \"capture1\"");
+var ambient = Buffer.from("authenticate 1  \nreset \ndelay \"10\" \nrun \"ambient\"");
 
-function capture1() {
-    client.send(capture1, 0, capture1.length, PORT, HOST, function (err, bytes) {
+function ambient() {
+    client.send(ambient, 0, ambient.length, PORT, HOST, function (err, bytes) {
         if (err) throw err;
         console.log('UDP message sent to ' + HOST + ':' + PORT);
-        console.log(bytes);
+        console.log("playing ambient");
         //  client.close();
-        //res.send('Playing capture 1');
+        //res.send('Playing presentation video');
+        app.timeout = 5000;
     });
 }
 
-app.get('/capture2', capture2);
+app.get('/anniversary', anniversary);
 
-var capture2 = Buffer.from("authenticate 1  \nreset \ndelay \"10\" \nrun \"capture2\"");
+var anniversary = Buffer.from("authenticate 1  \nreset \ndelay \"10\" \nrun \"anniversary\"");
 
-function capture2() {
-    client.send(capture2, 0, capture2.length, PORT, HOST, function (err, bytes) {
+function anniversary() {
+    client.send(anniversary, 0, anniversary.length, PORT, HOST, function (err, bytes) {
         if (err) throw err;
         console.log('UDP message sent to ' + HOST + ':' + PORT);
-        console.log(bytes);
+        console.log("playing anniversary");
+        //  client.close();
+        //res.send('Playing anniversary video');
+        
+        app.timeout = 5000;
+    });
+}
+
+app.get('/wef', wef);
+
+var wef = Buffer.from("authenticate 1  \nreset \ndelay \"10\" \nrun \"wef\"");
+
+function wef() {
+    client.send(wef, 0, wef.length, PORT, HOST, function (err, bytes) {
+        if (err) throw err;
+        console.log('UDP message sent to ' + HOST + ':' + PORT);
+        console.log("playing wef");
+        //  client.close();
+        //res.send('Playing anniversary video');
+        app.timeout = 5000;
+    });
+}
+
+app.get('/transform', transform);
+
+var transform = Buffer.from("authenticate 1  \nreset \ndelay \"10\" \nrun \"transform\"");
+
+function transform() {
+    client.send(transform, 0, transform.length, PORT, HOST, function (err, bytes) {
+        if (err) throw err;
+        console.log('UDP message sent to ' + HOST + ':' + PORT);
+        console.log("playing transform");
+        //  client.close();
+        //res.send('Playing anniversary video');
+        app.timeout = 5000;
+    });
+}
+
+
+
+app.get('/capture1funlight', capture1funlight);
+
+var capture1funlight = Buffer.from("authenticate 1  \nreset \ndelay \"10\" \nrun \"capture1funlight\"");
+
+function capture1funlight() {
+    client.send(capture1funlight, 0, capture1funlight.length, PORT, HOST, function (err, bytes) {
+        if (err) throw err;
+        console.log('UDP message sent to ' + HOST + ':' + PORT);
+        console.log("playing capture1funlight");
+        //  client.close();
+        //res.send('Playing capture 1');
+        app.timeout = 5000;
+    });
+}
+
+app.get('/capture1fundark', capture1fundark);
+
+var capture1fundark = Buffer.from("authenticate 1  \nreset \ndelay \"10\" \nrun \"capture1fundark\"");
+
+function capture1fundark() {
+    client.send(capture1fundark, 0, capture1fundark.length, PORT, HOST, function (err, bytes) {
+        if (err) throw err;
+        console.log('UDP message sent to ' + HOST + ':' + PORT);
+        console.log("playing capture1fundark");
+        //  client.close();
+        //res.send('Playing capture 1');
+        app.timeout = 5000;
+    });
+}
+
+app.get('/capture1seriouslight', capture1seriouslight);
+
+var capture1seriouslight = Buffer.from("authenticate 1  \nreset \ndelay \"10\" \nrun \"capture1seriouslight\"");
+
+function capture1seriouslight() {
+    client.send(capture1seriouslight, 0, capture1seriouslight.length, PORT, HOST, function (err, bytes) {
+        if (err) throw err;
+        console.log('UDP message sent to ' + HOST + ':' + PORT);
+        console.log("playing capture1seriouslight");
+        //  client.close();
+        //res.send('Playing capture 1');
+        app.timeout = 5000;
+    });
+}
+
+app.get('/capture1seriousdark', capture1seriousdark);
+
+var capture1seriousdark = Buffer.from("authenticate 1  \nreset \ndelay \"10\" \nrun \"capture1seriousdark\"");
+
+function capture1seriousdark() {
+    client.send(capture1seriousdark, 0, capture1seriousdark.length, PORT, HOST, function (err, bytes) {
+        if (err) throw err;
+        console.log('UDP message sent to ' + HOST + ':' + PORT);
+        console.log("playing capture1seriousdark");
+        //  client.close();
+        //res.send('Playing capture 1');
+        app.timeout = 5000;
+    });
+}
+
+app.get('/capture1full', capture1full);
+
+var capture1full = Buffer.from("authenticate 1  \nreset \ndelay \"10\" \nrun \"capture1full\"");
+
+function capture1full() {
+    client.send(capture1full, 0, capture1full.length, PORT, HOST, function (err, bytes) {
+        if (err) throw err;
+        console.log('UDP message sent to ' + HOST + ':' + PORT);
+        console.log("playing capture1full");
         //  client.close();
         //res.send('Playing capture 2');
+        app.timeout = 5000;
+    });
+}
+
+app.get('/capture2funlight', capture2funlight);
+
+var capture2funlight = Buffer.from("authenticate 1  \nreset \ndelay \"10\" \nrun \"capture2funlight\"");
+
+function capture2funlight() {
+    client.send(capture2funlight, 0, capture2funlight.length, PORT, HOST, function (err, bytes) {
+        if (err) throw err;
+        console.log('UDP message sent to ' + HOST + ':' + PORT);
+        console.log("playing capture2funlight");
+        //  client.close();
+        //res.send('Playing capture 2');
+    });
+}
+
+app.get('/capture2fundark', capture2fundark);
+
+var capture2fundark = Buffer.from("authenticate 1  \nreset \ndelay \"10\" \nrun \"capture2fundark\"");
+
+function capture2fundark() {
+    client.send(capture2fundark, 0, capture2fundark.length, PORT, HOST, function (err, bytes) {
+        if (err) throw err;
+        console.log('UDP message sent to ' + HOST + ':' + PORT);
+        console.log("playing capture2fundark");
+        //  client.close();
+        //res.send('Playing capture 2');
+        app.timeout = 5000;
+    });
+}
+
+app.get('/capture2seriouslight', capture2seriouslight);
+
+var capture2seriouslight = Buffer.from("authenticate 1  \nreset \ndelay \"10\" \nrun \"capture2seriouslight\"");
+
+function capture2seriouslight() {
+    client.send(capture2seriouslight, 0, capture2seriouslight.length, PORT, HOST, function (err, bytes) {
+        if (err) throw err;
+        console.log('UDP message sent to ' + HOST + ':' + PORT);
+        console.log("playing capture2seriouslight");
+        //  client.close();
+        //res.send('Playing capture 2');
+        app.timeout = 5000;
+    });
+}
+
+app.get('/capture2seriousdark', capture2seriousdark);
+
+var capture2seriousdark = Buffer.from("authenticate 1  \nreset \ndelay \"10\" \nrun \"capture2seriousdark\"");
+
+function capture2seriousdark() {
+    client.send(capture2seriousdark, 0, capture2seriousdark.length, PORT, HOST, function (err, bytes) {
+        if (err) throw err;
+        console.log('UDP message sent to ' + HOST + ':' + PORT);
+        console.log("playing capture2seriousdark");
+        //  client.close();
+        //res.send('Playing capture 2');
+        app.timeout = 5000;
+    });
+}
+
+app.get('/capture2full', capture2full);
+
+var capture2full = Buffer.from("authenticate 1  \nreset \ndelay \"10\" \nrun \"capture2full\"");
+
+function capture2full() {
+    client.send(capture2full, 0, capture2full.length, PORT, HOST, function (err, bytes) {
+        if (err) throw err;
+        console.log('UDP message sent to ' + HOST + ':' + PORT);
+        console.log("playing capture2full");
+        //  client.close();
+        //res.send('Playing capture 2');
+    });
+}
+
+//Capture 3
+
+app.get('/capture3funlight', capture3funlight);
+
+var capture3funlight = Buffer.from("authenticate 1  \nreset \ndelay \"10\" \nrun \"capture3funlight\"");
+
+
+function capture3funlight() {
+    client.send(capture3funlight, 0, capture3funlight.length, PORT, HOST, function (err, bytes) {
+        if (err) throw err;
+        console.log('UDP message sent to ' + HOST + ':' + PORT);
+        console.log("playing capture3funlight");
+        //  client.close();
+        //res.send('Playing capture 2');
+        app.timeout = 5000;
+    });
+}
+
+app.get('/capture3fundark', capture3fundark);
+
+var capture3fundark = Buffer.from("authenticate 1  \nreset \ndelay \"10\" \nrun \"capture3fundark\"");
+
+function capture3fundark() {
+    client.send(capture3fundark, 0, capture3fundark.length, PORT, HOST, function (err, bytes) {
+        if (err) throw err;
+        console.log('UDP message sent to ' + HOST + ':' + PORT);
+        console.log("playing capture3fundark");
+        //  client.close();
+        //res.send('Playing capture 2');
+        app.timeout = 5000;
+    });
+}
+
+app.get('/capture3seriouslight', capture3seriouslight);
+
+var capture3seriouslight = Buffer.from("authenticate 1  \nreset \ndelay \"10\" \nrun \"capture3seriouslight\"");
+
+function capture3seriouslight() {
+    client.send(capture3seriouslight, 0, capture3seriouslight.length, PORT, HOST, function (err, bytes) {
+        if (err) throw err;
+        console.log('UDP message sent to ' + HOST + ':' + PORT);
+        console.log("playing capture3seriouslight");
+        //  client.close();
+        //res.send('Playing capture 2');
+    });
+}
+
+app.get('/capture3seriousdark', capture3seriousdark);
+
+var capture3seriousdark = Buffer.from("authenticate 1  \nreset \ndelay \"10\" \nrun \"capture3seriousdark\"");
+
+function capture3seriousdark() {
+    client.send(capture3seriousdark, 0, capture3seriousdark.length, PORT, HOST, function (err, bytes) {
+        if (err) throw err;
+        console.log('UDP message sent to ' + HOST + ':' + PORT);
+        console.log("playing capture3seriousdark");
+        //  client.close();
+        //res.send('Playing capture 2');
+        app.timeout = 5000;
+    });
+}
+
+app.get('/capture3full', capture3full);
+
+var capture3full = Buffer.from("authenticate 1  \nreset \ndelay \"10\" \nrun \"capture3full\"");
+
+function capture3full() {
+    client.send(capture3full, 0, capture3full.length, PORT, HOST, function (err, bytes) {
+        if (err) throw err;
+        console.log('UDP message sent to ' + HOST + ':' + PORT);
+        console.log("playing capture3full");
+        //  client.close();
+        //res.send('Playing capture 2');
+        app.timeout = 5000;
     });
 }
 
@@ -292,7 +562,7 @@ function capture2() {
 
 //---------------------- Madmapper display controls ------------------------------------//
 
-app.get('/playMadcapture', playMadcapture);
+/*app.get('/playMadcapture', playMadcapture);
 app.get('/playLoopvideo', playLoopvideo);
 
 function playMadcapture(req, res) {
@@ -319,7 +589,7 @@ function playLoopvideo(req, res) {
     console.log('Playing Zone 2 Loop Content');
 }
 
-
+*/
 
 
 
